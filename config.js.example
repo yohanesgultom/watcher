@@ -1,0 +1,32 @@
+module.exports = {
+    // alerts
+    alerts: [
+        {
+            type: 'VIP.CO.ID',
+            email: "me@gmail.com",
+            validate: (rates) => {
+                // return true, if SGD buy rate >= IDR 10,800
+                let sgd = rates.find(r => r.id.toUpperCase() == 'SGD')
+                return sgd && sgd.buy >= 10800
+            },
+            message: (rates) => {
+                let sgd = rates.find(r => r.id.toUpperCase() == 'SGD')
+                let rate = sgd ? sgd.buy.toLocaleString() : '??'
+                // send alert with this message:
+                return `💵 SGD 1 = IDR ${rate} at vip.co.id`
+            },
+        },            
+    ],
+
+    // SMTP configuration
+    smtp: {
+        host: "smtp.gmail.com",
+        port: 465,
+        secure: true,
+        auth: {
+            user: "user@gmail.com",
+            pass: "password"
+        },
+    },
+
+}
